@@ -8,10 +8,11 @@
 </div>
 
 <script>
-  const parentParams = new URLSearchParams(window.location.search);
-  const donorFlag = parentParams.get('donor');
+  // Read the parent page URL
+  const ref = document.referrer;
+  const params = new URL(ref).searchParams;
 
-  if (donorFlag === 'true') {
+  if (params.get('donor') === 'true') {
     document.getElementById('donor-message').style.display = 'block';
   }
 </script>
