@@ -8,11 +8,18 @@
 </div>
 
 <script>
-  // Read the parent page URL
-  const ref = document.referrer;
-  const params = new URL(ref).searchParams;
+  const iframeParams = new URLSearchParams(window.location.search);
+  const iframeFlag = iframeParams.get('donor');
 
-  if (params.get('donor') === 'true') {
+  // Check the parent URL too
+  const parentURL = document.referrer || "";
+  const parentParams = parentURL.includes("?")
+    ? new URL(parentURL).searchParams
+    : new URLSearchParams();
+
+  const parentFlag = parentParams.get('donor');
+
+  if (iframeFlag === 'true' && parentFlag === 'true') {
     document.getElementById('donor-message').style.display = 'block';
   }
 </script>
