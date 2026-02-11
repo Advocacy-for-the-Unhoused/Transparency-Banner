@@ -8,17 +8,23 @@
 </div>
 
 <script>
+  // Check iframe URL
   const iframeParams = new URLSearchParams(window.location.search);
   const iframeFlag = iframeParams.get('donor');
 
-  // Check the parent URL too
-  const parentURL = document.referrer || "";
-  const parentParams = parentURL.includes("?")
-    ? new URL(parentURL).searchParams
-    : new URLSearchParams();
+  // Check parent URL (Google Sites strips query params unless we force them)
+  let parentFlag = null;
+  try {
+    const parentURL = document.referrer;
+    if (parentURL && parentURL.includes("?")) {
+      const parentParams = new URL(parentURL).searchParams;
+      parentFlag = parentParams.get('donor');
+    }
+  } catch (e) {
+    parentFlag = null;
+  }
 
-  const parentFlag = parentParams.get('donor');
-
+  // Show banner only if BOTH iframe and parent say donor=true
   if (iframeFlag === 'true' && parentFlag === 'true') {
     document.getElementById('donor-message').style.display = 'block';
   }
