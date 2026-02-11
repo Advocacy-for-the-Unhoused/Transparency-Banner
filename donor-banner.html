@@ -8,8 +8,10 @@
 </div>
 
 <script>
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('donor') === 'true') {
+  const parentParams = new URLSearchParams(window.location.search);
+  const donorFlag = parentParams.get('donor');
+
+  if (donorFlag === 'true') {
     document.getElementById('donor-message').style.display = 'block';
   }
 </script>
